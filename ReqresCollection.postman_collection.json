@@ -1,0 +1,279 @@
+{
+	"info": {
+		"_postman_id": "3b2725da-8f7c-4509-a286-28c35d3b5009",
+		"name": "ReqresCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28567301"
+	},
+	"item": [
+		{
+			"name": "CreateUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"validate response status code\", ()=>{",
+							"pm.response.to.have.status(201);",
+							"})",
+							"",
+							"pm.test(\"validate response message\", ()=>{",
+							"pm.response.to.have.status(\"Created\");",
+							"})",
+							"",
+							"pm.test(\"validate the name in the response body\", ()=>{ ",
+							"pm.expect(jsonData.name).to.eql(\"morpheus\");",
+							"})",
+							"",
+							"pm.test(\"validate the job response body\", ()=>{ ",
+							"pm.expect(jsonData.job).to.eql(\"dreamer\");",
+							"})",
+							"",
+							"pm.test(\"validate content type header value\", ()=>{",
+							"pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json; charset=utf-8\");",
+							"})",
+							"",
+							"pm.test(\"validate createAt field present in the responsebody\", ()=>{",
+							"pm.expect(pm.response.json()).to.have.property(\"createdAt\");",
+							"})",
+							"",
+							"const responseSchema = {",
+							"\"type\": \"object\",",
+							"\"properties\": {",
+							"\"name\": { \"type\": \"string\" },",
+							"\"job\": { \"type\": \"string\" },",
+							"\"id\": { \"type\": \"string\" },",
+							"\"createdAt\": { \"type\": \"string\", \"format\": \"date-time\" }",
+							"},",
+							"\"required\": [\"name\", \"job\", \"id\", \"createdAt\"]",
+							"};",
+							"",
+							"pm.test(\"Response body matches the schema\", function () {",
+							"pm.response.to.have.jsonSchema(responseSchema);",
+							"});",
+							"",
+							"pm.test(\"validate the response time\", ()=>{",
+							"pm.expect(pm.response.responseTime).to.be.below(300);",
+							"})",
+							"",
+							"pm.collectionVariables.set(\"id\", pm.response.json().id);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"morpheus\",\n    \"job\": \"dreamer\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"validate the response code\", ()=>{",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test(\"validate the response message\", ()=>{",
+							"    pm.response.to.have.status(\"OK\")",
+							"})",
+							"",
+							"pm.test(\"validate header information\", ()=>{",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json; charset=utf-8\")",
+							"})",
+							"",
+							"pm.test(\"validate the presence of updatedrAt field\", ()=>{",
+							"    pm.expect(pm.response.json()).to.have.property(\"updatedAt\")",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"morpheus\",\n    \"job\": \"zion resident\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users/{{id}}",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"validate the status code\", ()=>{",
+							"    pm.response.to.have.status(204);",
+							"})",
+							"",
+							"pm.test(\"validate the presence of content type parameter\", ()=>{",
+							"    pm.response.to.have.header(\"Content-Length\")",
+							"})",
+							"",
+							"pm.test(\"validate response message\", ()=>{",
+							"   pm.response.to.have.status(\"No Content\")",
+							"})",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users/{{id}}",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ListUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"checking for response code\", ()=>{",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test(\"checking for ok message\", ()=> {",
+							"    pm.response.to.have.status(\"OK\")",
+							"})",
+							"",
+							"pm.test(\"checking for the header field\", ()=>{",
+							"    pm.response.to.have.header(\"Content-Type\")",
+							"})",
+							"",
+							"pm.test(\"validating content type field value contains application/json as value\", ()=>{",
+							"   pm.expect(pm.response.headers.get('Content-Type')).to.equal('application/json; charset=utf-8')",
+							"})",
+							"",
+							"pm.test(\"validating response time\", ()=>{",
+							"   pm.expect(pm.response.responseTime).to.be.below(200)",
+							"})",
+							"",
+							"pm.test(\"First user has correct email\", function () {",
+							"    pm.expect(pm.response.json().data[0].email).to.eql(\"michael.lawson@reqres.in\");",
+							"});",
+							"",
+							"pm.test(\"Support URL is correct\", function () {",
+							"    pm.expect(pm.response.json().support.url).to.eql(\"https://reqres.in/#support-heading\");",
+							"});",
+							"",
+							"pm.test(\"Data array contains 6 items\", function () {",
+							"    pm.expect(pm.response.json().data).to.have.lengthOf(6);",
+							"});",
+							"",
+							"pm.test(\"Response body has correct structure\", function () {",
+							"    pm.response.to.have.jsonSchema({",
+							"        \"type\": \"object\",",
+							"        \"properties\": {",
+							"            \"page\": { \"type\": \"number\" },",
+							"            \"per_page\": { \"type\": \"number\" },",
+							"            \"total\": { \"type\": \"number\" },",
+							"            \"total_pages\": { \"type\": \"number\" },",
+							"            \"data\": { \"type\": \"array\" },",
+							"            \"support\": { \"type\": \"object\" }",
+							"        },",
+							"        \"required\": [\"page\", \"per_page\", \"total\", \"total_pages\", \"data\", \"support\"]",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users?page=2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
