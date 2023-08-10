@@ -1,0 +1,626 @@
+{
+	"info": {
+		"_postman_id": "1136b4e2-6c5e-4acb-b517-dd1f5a4c832e",
+		"name": "TwitterCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28567301"
+	},
+	"item": [
+		{
+			"name": "CollectionCreatePositive-AllParameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validate the response code is 201\", ()=>{",
+							"    pm.response.to.have.status(201);",
+							"})",
+							"",
+							"pm.test(\"Validate the created message\", ()=>{",
+							"    pm.response.to.have.status(\"Created\");",
+							"})",
+							"",
+							"pm.test(\"Validate the content type in header section\", ()=>{",
+							"    pm.expect(pm.response.headers.get(\"content-type\")).to.eql(\"application/json; charset=utf-8\");",
+							"})",
+							"",
+							"pm.test(\"Validate the name of the collection created\", ()=>{",
+							"    pm.expect(pm.response.json()).to.have.property(\"name\", \"My Tweet Collection\");",
+							"})",
+							"",
+							"pm.test(\"Validate the id in response body\", ()=>{",
+							"    pm.expect(pm.response.json()).to.have.property(\"id\");",
+							"})",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"My Tweet Collection\",\n  \"description\": \"A collection post request.\",\n  \"url\": \"https://example.com/my-collection\",\n  \"timeline_order\": \"curation_reverse_chron\"  \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.twitter.com/1.1/collections/create",
+					"protocol": "https",
+					"host": [
+						"api",
+						"twitter",
+						"com"
+					],
+					"path": [
+						"1.1",
+						"collections",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CollectionCreatePositive-MandatoryParameterOnly",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"validate the response code is 201\", ()=>{",
+							"    pm.response.to.have.status(201);",
+							"})",
+							"",
+							"pm.test(\"validate the created message\", ()=>{",
+							"    pm.response.to.have.status(\"Created\");",
+							"})",
+							"",
+							"pm.test(\"Validate the content type in header section\", ()=>{",
+							"    pm.expect(pm.response.headers.get(\"content-type\")).to.eql(\"application/json; charset=utf-8\");",
+							"})",
+							"",
+							"pm.test(\"Validate the id in response body\", ()=>{",
+							"    pm.expect(pm.response.json()).to.have.property(\"url\");",
+							"})",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"My first Collection\"   \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.twitter.com/1.1/collections/create",
+					"protocol": "https",
+					"host": [
+						"api",
+						"twitter",
+						"com"
+					],
+					"path": [
+						"1.1",
+						"collections",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CollectionCreatePositive-BothMandatory+OprtionalParameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"validate the response code is 201\", ()=>{",
+							"    pm.response.to.have.status(201);",
+							"})",
+							"",
+							"pm.test(\"validate the created message\", ()=>{",
+							"    pm.response.to.have.status(\"Created\");",
+							"})",
+							"",
+							"pm.test(\"Validate the content type in header section\", ()=>{",
+							"    pm.expect(pm.response.headers.get(\"content-type\")).to.eql(\"application/json; charset=utf-8\");",
+							"})",
+							"",
+							"pm.test(\"Validate the id in response body\", ()=>{",
+							"    pm.expect(pm.response.json()).to.have.property(\"location\");",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"My first Collection\",  \n  \"url\": \"https://example.com/my-collection\"  \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.twitter.com/1.1/collections/create",
+					"protocol": "https",
+					"host": [
+						"api",
+						"twitter",
+						"com"
+					],
+					"path": [
+						"1.1",
+						"collections",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CollectionCreatePositive-CombinationDataIncludingAlphaNumeric+SpecialKeys",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"validate the response code is 201\", ()=>{",
+							"    pm.response.to.have.status(201);",
+							"})",
+							"",
+							"pm.test(\"validate the created message\", ()=>{",
+							"    pm.response.to.have.status(\"Created\");",
+							"})",
+							"",
+							"pm.test(\"Validate the content type in header section\", ()=>{",
+							"    pm.expect(pm.response.headers.get(\"content-type\")).to.eql(\"application/json; charset=utf-8\");",
+							"})",
+							"",
+							"pm.test(\"Validate the id in response body\", ()=>{",
+							"    pm.expect(pm.response.json()).to.have.property(\"lang\");",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Tweet%2023\",\n  \"description\": \"%A collection post request for backend api testing position @just dice ? 2023\",\n  \"url\": \"https://example.com/my-collection\",\n  \"timeline_order\": \"curation_reverse_chron\"  \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.twitter.com/1.1/collections/create",
+					"protocol": "https",
+					"host": [
+						"api",
+						"twitter",
+						"com"
+					],
+					"path": [
+						"1.1",
+						"collections",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CollectionCreateNegative-AuthenticationFailure",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validate status code is 400\", ()=>{",
+							"    pm.test(pm.response.to.have.status(400));",
+							"})",
+							"",
+							"pm.test(\"Validate the authentication error message\", ()=>{",
+							"    pm.expect(pm.response.json().errors[0]).to.have.property(\"message\", \"Bad Authentication data.\");",
+							"})",
+							"",
+							"pm.test(\"Validate the content type in header section\", ()=>{",
+							"    pm.expect(pm.response.headers.get(\"content-type\")).to.eql(\"application/json; charset=utf-8\");",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"My first Collection\",\n  \"description\": \"A collection post request for justdice backend api tester.\",\n  \"url\": \"https://example.com/my-collection\",\n  \"timeline_order\": \"curation_reverse_chron\"  \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.twitter.com/1.1/collections/create",
+					"protocol": "https",
+					"host": [
+						"api",
+						"twitter",
+						"com"
+					],
+					"path": [
+						"1.1",
+						"collections",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CollectionCreateNegative-MissingMandatoryField",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validate the status code\", ()=>{",
+							"    pm.response.to.have.status(400);",
+							"})",
+							"",
+							"pm.test(\"Validate the status message\", ()=>{",
+							"    pm.response.to.have.status(\"Bad Request\");",
+							"})",
+							"",
+							"pm.test(\"Validate the content type in header section\", ()=>{",
+							"    pm.expect(pm.response.headers.get(\"content-type\")).to.eql(\"application/json; charset=utf-8\");",
+							"})",
+							"",
+							"pm.test(\"Validate the response time\", ()=>{",
+							"    pm.expect(pm.response.responseTime).to.below(500);",
+							"})",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n  \"description\": \"A collection post request for justdice backend api tester.\",\n  \"url\": \"https://example.com/my-collection\",\n  \"timeline_order\": \"curation_reverse_chron\"  \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.twitter.com/1.1/collections/create",
+					"protocol": "https",
+					"host": [
+						"api",
+						"twitter",
+						"com"
+					],
+					"path": [
+						"1.1",
+						"collections",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CollectionCreateNegative-InvalidEndPoint",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validate the status code\", ()=>{",
+							"    pm.test(pm.response.to.have.status(404));",
+							"})",
+							"",
+							"pm.test(\"Validate the not found message\", ()=>{",
+							"    pm.test(pm.response.to.have.status(\"Not Found\"));",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"My first Collection\",\n  \"description\": \"A collection post request for justdice backend api tester.\",\n  \"url\": \"https://example.com/my-collection\",\n  \"timeline_order\": \"curation_reverse_chron\" \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.twitter.com/1.1/collect/create",
+					"protocol": "https",
+					"host": [
+						"api",
+						"twitter",
+						"com"
+					],
+					"path": [
+						"1.1",
+						"collect",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CollectionCreateNegative-ExceedingParametersLength",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validate the status code\", ()=>{",
+							"    pm.response.to.have.status(400);",
+							"})",
+							"",
+							"pm.test(\"Validate the status message\", ()=>{",
+							"    pm.response.to.have.status(\"Bad Request\");",
+							"})",
+							"",
+							"pm.test(\"Validate the content type in header section\", ()=>{",
+							"    pm.expect(pm.response.headers.get(\"content-type\")).to.eql(\"application/json; charset=utf-8\");",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"A collection post request for justdice backend api tester.\",\n  \"description\": \"JustDice is a cutting-edge technology company that has revolutionized the mobile play-and-earn genre. With a passion for innovative gaming experiences, JustDice offers a wide range of rewarded apps\",\n  \"url\": \"https://example.com/my-collection\",\n  \"timeline_order\": \"curation_reverse_chron\"  \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.twitter.com/1.1/collections/create",
+					"protocol": "https",
+					"host": [
+						"api",
+						"twitter",
+						"com"
+					],
+					"path": [
+						"1.1",
+						"collections",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CollectionCreateNegative-InvalidvalueInURLParameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validate the status code\", ()=>{",
+							"    pm.response.to.have.status(400);",
+							"})",
+							"",
+							"pm.test(\"Validate the status message\", ()=>{",
+							"    pm.response.to.have.status(\"Bad Request\");",
+							"})",
+							"",
+							"pm.test(\"Validate the content type in header section\", ()=>{",
+							"    pm.expect(pm.response.headers.get(\"content-type\")).to.eql(\"application/json; charset=utf-8\");",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"My Tweet Collection\",\n  \"description\": \"A collection post request for justdice backend api tester.\",\n  \"url\": \"htt://example/my-page\",\n  \"timeline_order\": \"curation_reverse_chron\"  \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.twitter.com/1.1/collections/create",
+					"protocol": "https",
+					"host": [
+						"api",
+						"twitter",
+						"com"
+					],
+					"path": [
+						"1.1",
+						"collections",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CollectionCreateNegative-InvalidvalueInTimeLineParameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validate the status code\", ()=>{",
+							"    pm.response.to.have.status(400);",
+							"})",
+							"",
+							"pm.test(\"Validate the status message\", ()=>{",
+							"    pm.response.to.have.status(\"Bad Request\");",
+							"})",
+							"",
+							"pm.test(\"Validate the content type in header section\", ()=>{",
+							"    pm.expect(pm.response.headers.get(\"content-type\")).to.eql(\"application/json; charset=utf-8\");",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"My Tweet Collection\",\n  \"description\": \"A collection post request for justdice backend api tester.\",\n  \"url\": \"htt://example/my-page\",\n  \"timeline_order\": \"curation_reverse_chron\"  \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.twitter.com/1.1/collections/create",
+					"protocol": "https",
+					"host": [
+						"api",
+						"twitter",
+						"com"
+					],
+					"path": [
+						"1.1",
+						"collections",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CollectionCreateNegative-InvalidHTTPMethodSelection",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validate the status code\", ()=>{",
+							"    pm.response.to.have.status(400);",
+							"})",
+							"",
+							"pm.test(\"Validate the status message\", ()=>{",
+							"    pm.response.to.have.status(\"Bad Request\");",
+							"})",
+							"",
+							"pm.test(\"Validate the content type in header section\", ()=>{",
+							"    pm.expect(pm.response.headers.get(\"content-type\")).to.eql(\"application/json; charset=utf-8\");",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n  \"name\": \"My first Collection\",\n  \"description\": \"A collection post request for justdice backend api tester.\",\n  \"url\": \"https://example.com/my-collection\",\n  \"timeline_order\": \"curation_reverse_chron\"   \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.twitter.com/1.1/collections/create",
+					"protocol": "https",
+					"host": [
+						"api",
+						"twitter",
+						"com"
+					],
+					"path": [
+						"1.1",
+						"collections",
+						"create"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
